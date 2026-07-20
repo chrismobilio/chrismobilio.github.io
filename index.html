@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Christopher Mobilio — Software Developer</title>
+<meta name="description" content="Frontend-focused full-stack developer building production software: scheduling systems, operator interfaces, dashboards, and customer portals.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAFAF8;
+    --ink:#14141A;
+    --ink-60:#5B5B63;
+    --line:#DCDCD6;
+    --cyan:#0092C7;
+    --magenta:#E5197D;
+    --yellow:#FFC400;
+    --key:#14141A;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Archivo',system-ui,sans-serif;
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace}
+  a{color:var(--cyan);text-decoration:none}
+  a:hover{text-decoration:underline}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+  /* ---- CMYK calibration bar (signature) ---- */
+  .cmyk{display:flex;height:8px}
+  .cmyk span{flex:1}
+  .cmyk .c{background:var(--cyan)}
+  .cmyk .m{background:var(--magenta)}
+  .cmyk .y{background:var(--yellow)}
+  .cmyk .k{background:var(--key)}
+
+  /* ---- Header ---- */
+  header{border-bottom:1px solid var(--line)}
+  .topbar{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+  .topbar .id{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink-60);letter-spacing:.04em}
+  nav{display:flex;gap:22px;font-size:14px;font-weight:500}
+  nav a{color:var(--ink)}
+  nav a:hover{color:var(--cyan);text-decoration:none}
+
+  /* ---- Hero ---- */
+  .hero{position:relative;padding:88px 0 72px}
+  .hero .crop{position:absolute;width:22px;height:22px;border-color:var(--ink);border-style:solid;opacity:.55}
+  .crop.tl{top:24px;left:0;border-width:1px 0 0 1px}
+  .crop.tr{top:24px;right:0;border-width:1px 1px 0 0}
+  .crop.bl{bottom:24px;left:0;border-width:0 0 1px 1px}
+  .crop.br{bottom:24px;right:0;border-width:0 1px 1px 0}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-60);margin-bottom:18px}
+  .eyebrow b{color:var(--magenta);font-weight:500}
+  h1{font-weight:900;font-size:clamp(44px,7.5vw,84px);line-height:.98;letter-spacing:-.02em;text-transform:uppercase}
+  h1 .thin{font-weight:400}
+  .hero p.lede{margin-top:26px;max-width:62ch;font-size:19px;color:var(--ink-60)}
+  .hero p.lede strong{color:var(--ink);font-weight:700}
+  .hero-links{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap}
+  .btn{display:inline-block;padding:12px 22px;font-size:15px;font-weight:700;border:1px solid var(--ink);color:var(--ink);transition:background .15s,color .15s}
+  .btn:hover{background:var(--ink);color:var(--paper);text-decoration:none}
+  .btn.primary{background:var(--ink);color:var(--paper)}
+  .btn.primary:hover{background:var(--cyan);border-color:var(--cyan)}
+
+  /* ---- Section headers ---- */
+  section{padding:72px 0;border-top:1px solid var(--line)}
+  .sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:44px}
+  h2{font-weight:800;font-size:clamp(26px,3.4vw,36px);letter-spacing:-.01em;text-transform:uppercase}
+  .sec-head .count{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink-60)}
+
+  /* ---- Project "job tickets" ---- */
+  .job{border:1px solid var(--ink);margin-bottom:40px;background:#fff}
+  .job-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--ink)}
+  .job-head .no{font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.08em;color:var(--ink-60)}
+  .job-head .status{font-family:'IBM Plex Mono',monospace;font-size:12px;padding:3px 10px;border:1px solid var(--line);color:var(--ink-60)}
+  .job-head .status.live{border-color:var(--cyan);color:var(--cyan)}
+  .shot{position:relative;aspect-ratio:16/9;background:repeating-linear-gradient(45deg,#F1F1EC,#F1F1EC 12px,#EAEAE4 12px,#EAEAE4 24px);border-bottom:1px solid var(--ink);overflow:hidden}
+  .shot img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+  .shot .placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:20px}
+  .shot .placeholder .tag{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink-60)}
+  .shot.loaded .placeholder{display:none}
+  .job-body{padding:26px 20px 28px}
+  .job-body h3{font-size:24px;font-weight:800;letter-spacing:-.01em;margin-bottom:10px}
+  .job-body p{color:var(--ink-60);max-width:72ch}
+  .spec{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .spec span{font-family:'IBM Plex Mono',monospace;font-size:12.5px;padding:5px 10px;border:1px solid var(--line);color:var(--ink)}
+
+  /* ---- About / skills ---- */
+  .cols{display:grid;grid-template-columns:1.2fr .8fr;gap:56px}
+  @media (max-width:760px){.cols{grid-template-columns:1fr}}
+  .about p{margin-bottom:16px;color:var(--ink-60)}
+  .about p strong{color:var(--ink)}
+  .skill-group{margin-bottom:22px}
+  .skill-group .label{font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--magenta);margin-bottom:8px}
+  .skill-group .items{font-size:15.5px;line-height:1.7}
+
+  /* ---- Contact ---- */
+  .contact{text-align:left}
+  .contact h2{margin-bottom:16px}
+  .contact p{color:var(--ink-60);max-width:58ch;margin-bottom:26px}
+  footer{border-top:1px solid var(--line);padding:22px 0 40px}
+  footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--ink-60)}
+
+  /* ---- Reveal on scroll ---- */
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+
+<div class="cmyk" aria-hidden="true"><span class="c"></span><span class="m"></span><span class="y"></span><span class="k"></span></div>
+
+<header>
+  <div class="wrap topbar">
+    <span class="id">MOBILIO / TORONTO, ON</span>
+    <nav aria-label="Site">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap hero">
+  <span class="crop tl" aria-hidden="true"></span><span class="crop tr" aria-hidden="true"></span>
+  <span class="crop bl" aria-hidden="true"></span><span class="crop br" aria-hidden="true"></span>
+  <p class="eyebrow">Software developer <b>—</b> frontend &amp; full-stack</p>
+  <h1>Christopher<br>Mobilio</h1>
+  <p class="lede">I build <strong>production software people rely on every shift</strong> — scheduling systems, operator interfaces, real-time dashboards, and customer portals — from the design tokens up to the APIs underneath. Angular, TypeScript, React, and Node.js, shipped into a live manufacturing environment.</p>
+  <div class="hero-links">
+    <a class="btn primary" href="#work">View work</a>
+    <a class="btn" href="mailto:chrismobilio91@gmail.com">Get in touch</a>
+  </div>
+</div>
+
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Selected work</h2>
+      <span class="count">05 PROJECTS — CCL LABEL, 2021–PRESENT</span>
+    </div>
+
+    <!-- PROJECT 1 -->
+    <article class="job reveal">
+      <div class="job-head">
+        <span class="no">JOB 01 / SCHEDULING</span>
+        <span class="status live">IN PRODUCTION</span>
+      </div>
+      <div class="shot" id="shot-1">
+        <img src="images/scheduling-system.png" alt="Production scheduling system interface" onload="this.parentElement.classList.add('loaded')" onerror="this.remove()">
+        <div class="placeholder"><span class="tag">ADD SCREENSHOT → images/scheduling-system.png</span></div>
+      </div>
+      <div class="job-body">
+        <h3>Production Scheduling System</h3>
+        <p>A scheduling application used daily to plan and sequence production across the division — replacing manual, paper-based planning with a live, drag-and-drop schedule the whole floor works from.</p>
+        <div class="spec">
+          <span>Angular</span><span>Angular Material</span><span>RxJS</span><span>Node.js</span><span>Progress OpenEdge</span><span>SQL</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJECT 2 -->
+    <article class="job reveal">
+      <div class="job-head">
+        <span class="no">JOB 02 / SHOP FLOOR</span>
+        <span class="status live">IN PRODUCTION</span>
+      </div>
+      <div class="shot" id="shot-2">
+        <img src="images/operator-interface.png" alt="Operator interface for shop-floor workstations" onload="this.parentElement.classList.add('loaded')" onerror="this.remove()">
+        <div class="placeholder"><span class="tag">ADD SCREENSHOT → images/operator-interface.png</span></div>
+      </div>
+      <div class="job-body">
+        <h3>Operator Interfaces</h3>
+        <p>Touch-friendly workstation interfaces for machine operators — built for speed, legibility at a distance, and zero training overhead. A core piece of the division's transition to fully paperless operations.</p>
+        <div class="spec">
+          <span>Angular</span><span>TypeScript</span><span>Custom design tokens</span><span>REST APIs</span><span>ABL / OpenEdge</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJECT 3 -->
+    <article class="job reveal">
+      <div class="job-head">
+        <span class="no">JOB 03 / VISIBILITY</span>
+        <span class="status live">IN PRODUCTION</span>
+      </div>
+      <div class="shot" id="shot-3">
+        <img src="images/dashboards.png" alt="Real-time production dashboards" onload="this.parentElement.classList.add('loaded')" onerror="this.remove()">
+        <div class="placeholder"><span class="tag">ADD SCREENSHOT → images/dashboards.png</span></div>
+      </div>
+      <div class="job-body">
+        <h3>Real-Time Dashboards</h3>
+        <p>Live dashboards surfacing production, sales, and distribution data for managers and the floor — turning QAD/ERP data into at-a-glance answers with DataTables-driven drill-downs.</p>
+        <div class="spec">
+          <span>React</span><span>DataTables</span><span>Node.js</span><span>SQL</span><span>QAD reporting</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJECT 4 -->
+    <article class="job reveal">
+      <div class="job-head">
+        <span class="no">JOB 04 / CUSTOMER-FACING</span>
+        <span class="status live">LIVE WORLDWIDE</span>
+      </div>
+      <div class="shot" id="shot-4">
+        <img src="images/customer-portal.png" alt="Customer portal for order visibility" onload="this.parentElement.classList.add('loaded')" onerror="this.remove()">
+        <div class="placeholder"><span class="tag">ADD SCREENSHOT → images/customer-portal.png</span></div>
+      </div>
+      <div class="job-body">
+        <h3>Customer Portal</h3>
+        <p>A live portal serving customers worldwide — order visibility, artwork, and self-service that cut down support calls and became the division's front door. Designed, built, and maintained end-to-end.</p>
+        <div class="spec">
+          <span>Angular</span><span>Bootstrap 5</span><span>Node.js / Express</span><span>REST APIs</span><span>SQL</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJECT 5 -->
+    <article class="job reveal">
+      <div class="job-head">
+        <span class="no">JOB 05 / COLOR</span>
+        <span class="status live">IN PRODUCTION</span>
+      </div>
+      <div class="shot" id="shot-5">
+        <img src="images/gmg-color-app.png" alt="Web application built on the GMG Color API" onload="this.parentElement.classList.add('loaded')" onerror="this.remove()">
+        <div class="placeholder"><span class="tag">ADD SCREENSHOT → images/gmg-color-app.png</span></div>
+      </div>
+      <div class="job-body">
+        <h3>GMG Color Web Applications</h3>
+        <p>Web tools built on the GMG Color API bringing professional color management into the browser for the prepress team — demoed to CCL divisions across Canada and the United States.</p>
+        <div class="spec">
+          <span>JavaScript</span><span>GMG Color API</span><span>jQuery</span><span>Tailwind CSS</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head"><h2>About</h2><span class="count">SPEC SHEET</span></div>
+    <div class="cols">
+      <div class="about">
+        <p>I'm a developer at <strong>CCL Label</strong>, a division of CCL Industries — the world's largest label company — where I've been the engineer behind the division's move to paperless operations. I own my applications end-to-end: requirements, UI/UX, design systems and tokens, frontend, APIs, database, deployment, and support.</p>
+        <p>Before CCL, I built and launched APIs and a deployment-ready Java web application at <strong>De Havilland Aircraft of Canada</strong> during my Professional Experience Year.</p>
+        <p>Honours B.Sc. from the <strong>University of Toronto</strong> — Computational Cognitive Science with a focus on AI, minoring in Statistics and Information Systems.</p>
+      </div>
+      <div class="skills">
+        <div class="skill-group">
+          <div class="label">Frontend</div>
+          <div class="items">JavaScript · TypeScript · Angular &amp; Angular Material · RxJS · React · Tailwind · Bootstrap · jQuery</div>
+        </div>
+        <div class="skill-group">
+          <div class="label">Backend &amp; data</div>
+          <div class="items">Node.js · Express · REST API design · SQL · Progress OpenEdge (ABL) · QAD</div>
+        </div>
+        <div class="skill-group">
+          <div class="label">Practice</div>
+          <div class="items">Design systems &amp; tokens · Accessibility (WCAG) · Regression testing · Agile · Git</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="wrap">
+    <h2>Let's talk</h2>
+    <p>Open to frontend and full-stack roles in Toronto or remote. The fastest way to reach me is email.</p>
+    <div class="hero-links">
+      <a class="btn primary" href="mailto:chrismobilio91@gmail.com">chrismobilio91@gmail.com</a>
+      <a class="btn" href="https://www.linkedin.com/in/YOUR-PROFILE" rel="me">LinkedIn</a>
+      <a class="btn" href="https://github.com/YOUR-USERNAME" rel="me">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 CHRISTOPHER MOBILIO</span>
+    <span>SET IN ARCHIVO &amp; IBM PLEX MONO — TORONTO, ON</span>
+  </div>
+</footer>
+
+<div class="cmyk" aria-hidden="true"><span class="c"></span><span class="m"></span><span class="y"></span><span class="k"></span></div>
+
+<script>
+  // Scroll reveal (respects reduced motion via CSS)
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
