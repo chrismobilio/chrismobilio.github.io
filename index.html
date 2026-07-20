@@ -123,7 +123,7 @@
   .shot{cursor:pointer}
   .shot .hint{position:absolute;right:12px;bottom:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;padding:5px 10px;background:var(--ink);color:var(--paper);opacity:0;transition:opacity .15s;pointer-events:none}
   .shot:hover .hint,.shot:focus-visible .hint{opacity:1}
-  dialog.lightbox{border:1px solid var(--ink);padding:0;background:var(--paper);width:min(960px,94vw);max-height:92vh}
+  dialog.lightbox{position:fixed;inset:0;margin:auto;border:1px solid var(--ink);padding:0;background:var(--paper);width:min(960px,94vw);max-height:92vh;height:fit-content}
   dialog.lightbox::backdrop{background:rgba(20,20,26,.82)}
   .lb-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--ink)}
   .lb-title{font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.08em;color:var(--ink-60)}
