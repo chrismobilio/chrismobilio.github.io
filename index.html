@@ -118,6 +118,28 @@
   .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
   .reveal.in{opacity:1;transform:none}
   @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+  /* ---- Clickable shots + lightbox gallery ---- */
+  .shot{cursor:pointer}
+  .shot .hint{position:absolute;right:12px;bottom:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;padding:5px 10px;background:var(--ink);color:var(--paper);opacity:0;transition:opacity .15s;pointer-events:none}
+  .shot:hover .hint,.shot:focus-visible .hint{opacity:1}
+  dialog.lightbox{border:1px solid var(--ink);padding:0;background:var(--paper);width:min(960px,94vw);max-height:92vh}
+  dialog.lightbox::backdrop{background:rgba(20,20,26,.82)}
+  .lb-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--ink)}
+  .lb-title{font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.08em;color:var(--ink-60)}
+  .lb-close{font-family:'IBM Plex Mono',monospace;font-size:12.5px;background:none;border:1px solid var(--ink);color:var(--ink);padding:5px 12px;cursor:pointer}
+  .lb-close:hover{background:var(--ink);color:var(--paper)}
+  .lb-stage{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:0}
+  .lb-nav{background:none;border:none;cursor:pointer;font-size:26px;line-height:1;padding:0 14px;align-self:stretch;color:var(--ink)}
+  .lb-nav:hover{color:var(--magenta)}
+  .lb-nav:disabled{opacity:.2;cursor:default;color:var(--ink)}
+  .lb-stage figure{margin:0;min-width:0}
+  .lb-stage img{display:block;width:100%;max-height:66vh;object-fit:contain;background:repeating-linear-gradient(45deg,#F1F1EC,#F1F1EC 12px,#EAEAE4 12px,#EAEAE4 24px)}
+  .lb-missing{display:flex;align-items:center;justify-content:center;height:40vh;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink-60);text-align:center;padding:20px}
+  .lb-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-top:1px solid var(--line)}
+  .lb-caption{font-size:14.5px;color:var(--ink-60)}
+  .lb-count{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--ink)}
+  @media (max-width:600px){.lb-nav{padding:0 8px;font-size:22px}}
 </style>
 </head>
 <body>
@@ -285,6 +307,7 @@
     <p>Open to frontend and full-stack roles in Toronto or remote. The fastest way to reach me is email.</p>
     <div class="hero-links">
       <a class="btn primary" href="mailto:chrismobilio91@gmail.com">chrismobilio91@gmail.com</a>
+      <a class="btn" href="https://www.linkedin.com/in/YOUR-PROFILE" rel="me">LinkedIn</a>
       <a class="btn" href="https://github.com/YOUR-USERNAME" rel="me">GitHub</a>
     </div>
   </div>
@@ -299,12 +322,119 @@
 
 <div class="cmyk" aria-hidden="true"><span class="c"></span><span class="m"></span><span class="y"></span><span class="k"></span></div>
 
+<dialog id="lightbox" class="lightbox" aria-label="Project screenshot gallery">
+  <div class="lb-head">
+    <span class="lb-title" id="lb-title"></span>
+    <button class="lb-close" id="lb-close" aria-label="Close gallery">CLOSE ✕</button>
+  </div>
+  <div class="lb-stage">
+    <button class="lb-nav" id="lb-prev" aria-label="Previous screenshot">←</button>
+    <figure>
+      <img id="lb-img" alt="">
+      <div class="lb-missing" id="lb-missing" hidden></div>
+    </figure>
+    <button class="lb-nav" id="lb-next" aria-label="Next screenshot">→</button>
+  </div>
+  <div class="lb-foot">
+    <span class="lb-caption" id="lb-caption"></span>
+    <span class="lb-count" id="lb-count"></span>
+  </div>
+</dialog>
+
 <script>
   // Scroll reveal (respects reduced motion via CSS)
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
   },{threshold:0.12});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  /* ============================================================
+     GALLERIES — edit this list to add/remove screenshots.
+     Each entry: {src: 'images/....png', caption: 'shown below image'}
+     ============================================================ */
+  const GALLERIES = {
+    'shot-1': { title:'JOB 01 / PRODUCTION SCHEDULING SYSTEM', images:[
+      {src:'images/scheduling-system.png',   caption:'Main schedule board'},
+      {src:'images/scheduling-system-2.png', caption:'Job detail view'},
+      {src:'images/scheduling-system-3.png', caption:'Drag-and-drop sequencing'},
+    ]},
+    'shot-2': { title:'JOB 02 / OPERATOR INTERFACES', images:[
+      {src:'images/operator-interface.png',   caption:'Workstation home screen'},
+      {src:'images/operator-interface-2.png', caption:'Active job view'},
+    ]},
+    'shot-3': { title:'JOB 03 / REAL-TIME DASHBOARDS', images:[
+      {src:'images/dashboards.png',   caption:'Production overview'},
+      {src:'images/dashboards-2.png', caption:'Drill-down tables'},
+    ]},
+    'shot-4': { title:'JOB 04 / CUSTOMER PORTAL', images:[
+      {src:'images/customer-portal.png',   caption:'Customer landing page'},
+      {src:'images/customer-portal-2.png', caption:'Order tracking'},
+    ]},
+    'shot-5': { title:'JOB 05 / GMG COLOR WEB APPS', images:[
+      {src:'images/gmg-color-app.png',   caption:'Color management tool'},
+      {src:'images/gmg-color-app-2.png', caption:'API-driven workflow'},
+    ]},
+  };
+
+  const lb      = document.getElementById('lightbox');
+  const lbImg   = document.getElementById('lb-img');
+  const lbMiss  = document.getElementById('lb-missing');
+  const lbTitle = document.getElementById('lb-title');
+  const lbCap   = document.getElementById('lb-caption');
+  const lbCount = document.getElementById('lb-count');
+  const btnPrev = document.getElementById('lb-prev');
+  const btnNext = document.getElementById('lb-next');
+  let current = null, idx = 0;
+
+  function render(){
+    const g = GALLERIES[current];
+    const item = g.images[idx];
+    lbTitle.textContent = g.title;
+    lbCap.textContent   = item.caption || '';
+    lbCount.textContent = String(idx+1).padStart(2,'0') + ' / ' + String(g.images.length).padStart(2,'0');
+    btnPrev.disabled = idx === 0;
+    btnNext.disabled = idx === g.images.length - 1;
+    lbMiss.hidden = true; lbImg.hidden = false;
+    lbImg.alt = g.title + ' — ' + (item.caption || 'screenshot');
+    lbImg.src = item.src;
+  }
+  lbImg.addEventListener('error', ()=>{
+    lbImg.hidden = true; lbMiss.hidden = false;
+    lbMiss.textContent = 'SCREENSHOT NOT UPLOADED YET → ' + GALLERIES[current].images[idx].src;
+  });
+
+  function open(id){ current = id; idx = 0; render(); lb.showModal(); }
+  function step(d){
+    const g = GALLERIES[current];
+    idx = Math.min(Math.max(idx + d, 0), g.images.length - 1);
+    render();
+  }
+
+  btnPrev.addEventListener('click', ()=>step(-1));
+  btnNext.addEventListener('click', ()=>step(1));
+  document.getElementById('lb-close').addEventListener('click', ()=>lb.close());
+  lb.addEventListener('click', (e)=>{ if(e.target === lb) lb.close(); }); // click backdrop to close
+  lb.addEventListener('keydown', (e)=>{
+    if(e.key === 'ArrowLeft')  step(-1);
+    if(e.key === 'ArrowRight') step(1);
+  });
+
+  // Wire up each project shot: clickable, keyboard-accessible, with hover hint
+  Object.keys(GALLERIES).forEach(id=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.setAttribute('role','button');
+    el.setAttribute('tabindex','0');
+    el.setAttribute('aria-label','Open screenshot gallery: ' + GALLERIES[id].title);
+    const hint = document.createElement('span');
+    hint.className = 'hint';
+    hint.textContent = 'VIEW GALLERY +';
+    el.appendChild(hint);
+    el.addEventListener('click', ()=>open(id));
+    el.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); open(id); }
+    });
+  });
 </script>
 </body>
 </html>
