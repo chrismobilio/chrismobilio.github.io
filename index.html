@@ -134,13 +134,13 @@
   .lb-nav:hover{color:var(--magenta)}
   .lb-nav:disabled{opacity:.2;cursor:default;color:var(--ink)}
   .lb-stage figure{margin:0;min-width:0;overflow:auto;-webkit-overflow-scrolling:touch}
-.lb-stage img{display:block;width:100%;max-height:78vh;object-fit:contain;cursor:zoom-in;background:repeating-linear-gradient(45deg,#F1F1EC,#F1F1EC 12px,#EAEAE4 12px,#EAEAE4 24px)}
-.lb-stage figure.zoomed{cursor:zoom-out}
-.lb-stage figure.zoomed img{width:auto;max-width:none;height:78vh;max-height:none;cursor:zoom-out}
+  .lb-stage img{display:block;width:100%;max-height:78vh;object-fit:contain;cursor:zoom-in;background:repeating-linear-gradient(45deg,#F1F1EC,#F1F1EC 12px,#EAEAE4 12px,#EAEAE4 24px)}
+  .lb-stage figure.zoomed{cursor:zoom-out}
+  .lb-stage figure.zoomed img{width:auto;max-width:none;height:78vh;max-height:none;cursor:zoom-out}
   .lb-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-top:1px solid var(--line)}
   .lb-caption{font-size:14.5px;color:var(--ink-60)}
   .lb-zoom{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;color:var(--ink);border:1px solid var(--line);padding:4px 9px;background:none;cursor:pointer;white-space:nowrap}
-.lb-zoom:hover{background:var(--ink);color:var(--paper)}
+  .lb-zoom:hover{background:var(--ink);color:var(--paper)}
   .lb-count{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--ink)}
   @media (max-width:700px){
   dialog.lightbox[open]{display:flex;flex-direction:column}
@@ -363,21 +363,25 @@
      ============================================================ */
   const GALLERIES = {
     'shot-1': { title:'JOB 01 / PRODUCTION SCHEDULING SYSTEM', images:[
+      {src:'images/scheduling-system.png', caption:'Main schedule (timeline)'},
       {src:'images/scheduling-system-3.png', caption:'Order detail edit'},
       {src:'images/scheduling-system-2.png', caption:'Order history'},
       {src:'images/scheduling-system-4.png', caption:'Work center mapping'}
     ]},
     'shot-2': { title:'JOB 02 / CUSTOMER PORTAL', images:[
+      {src:'images/customer-portal.png', caption:'Main customer page'},
       {src:'images/customer-portal-2.png', caption:'Order pricing and creation'},
       {src:'images/customer-portal-3.png', caption:'Order tracking'},
       {src:'images/customer-portal-4.png', caption:'Document viewer'}
     ]},
     'shot-3': { title:'JOB 03 / REPORTING & DASHBOARDS', images:[
+      {src:'images/dashboards.png', caption:'Production work center'},
       {src:'images/dashboards-2.png', caption:'Electronic production overview'},
       {src:'images/dashboards-3.png', caption:'Production floor overview'},
       {src:'images/dashboards-4.png', caption:'Warehouse module (fully custom)'}
     ]},
     'shot-4': { title:'JOB 04 / OPERATOR INTERFACES', images:[
+      {src:'images/operator-interface.png', caption:'Operator login'},
       {src:'images/operator-interface-2.png', caption:'Workstation home screen'},
       {src:'images/operator-interface-3.png', caption:'Active production order'}
     ]}
